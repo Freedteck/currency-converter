@@ -1,0 +1,63 @@
+<div class="converter">
+  <form sui-form class="form" #currencyForm="ngForm" (ngSubmit)="onSubmit()">
+    <h1>Currency Converter</h1>
+    <div suiFormField>
+      <label for="amount">Enter amount</label>
+      <input
+        type="number"
+        name="amount"
+        placeholder="Amount"
+        [(ngModel)]="amount"
+        required
+        id="amount"
+      />
+    </div>
+    <div suiFormFields suiWidth="two">
+      <div suiFormField>
+        <label for="fromCurrency">From</label>
+        <sui-select
+          suiPlaceholder="From"
+          [suiOptions]="currencies"
+          [(ngModel)]="fromCurrency"
+          name="fromCurrency"
+          required
+          id="fromCurrency"
+        ></sui-select>
+      </div>
+      <div suiFormField>
+        <label for="toCurrency">To</label>
+        <sui-select
+          suiPlaceholder="To"
+          [suiOptions]="currencies"
+          [(ngModel)]="toCurrency"
+          name="toCurrency"
+          required
+          id="toCurrency"
+        ></sui-select>
+      </div>
+    </div>
+    <p
+      [ngClass]="{
+        'ui message red': isError,
+      }"
+    >
+      {{ getDisplayMessage() }}
+    </p>
+    <button
+      sui-button
+      suiEmphasis="positive"
+      type="submit"
+      [disabled]="!currencyForm.form.valid"
+    >
+      Convert
+    </button>
+    <div
+      [ngClass]="{
+        'ui message green': !isError && conversionResult
+      }"
+      class="result"
+    >
+      {{ conversionResult }}
+    </div>
+  </form>
+</div>
