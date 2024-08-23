@@ -28,6 +28,7 @@ export class CurrencyComponent {
   errorMessage: string | null = null;
   conversionResult: string | null = null;
   isError: boolean = false;
+  isLoading: boolean = false;
 
   constructor(private convertCurrency: CurrencyApiService) {}
 
@@ -37,12 +38,14 @@ export class CurrencyComponent {
 
   onSubmit(): void {
     this.clearMessages();
+    this.isLoading = true;
 
     if (this.isValidConversion()) {
       this.isError = false;
       this.convertCur();
     } else {
       this.isError = true;
+      this.isLoading = false;
       this.errorMessage = 'Please select different currencies to convert.';
     }
     console.log(this.isError);
