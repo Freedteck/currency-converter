@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { NgxSemanticModule } from 'ngx-semantic';
 import { CurrencyApiService } from '../currency-api.service';
-// import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
@@ -44,11 +43,10 @@ export class CurrencyComponent {
       this.isError = false;
       this.convertCur();
     } else {
-      this.isError = true;
       this.isLoading = false;
+      this.isError = true;
       this.errorMessage = 'Please select different currencies to convert.';
     }
-    console.log(this.isError);
   }
 
   convertCur(): void {
@@ -62,11 +60,13 @@ export class CurrencyComponent {
           this.conversionResult = `${this.amount} ${
             this.fromCurrency
           } = ${response.conversion_result.toFixed(2)} ${this.toCurrency}`;
+          this.isLoading = false;
         },
         (error) => {
           console.error('Conversion error:', error);
           this.errorMessage = 'An error occurred while processing the request.';
           this.isError = true;
+          this.isLoading = false;
         }
       );
   }
